@@ -1,0 +1,119 @@
+<style>
+  .gallery-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    padding: 24px;
+  }
+  .gallery-img {
+    width: 320px;
+    height: 240px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .gallery-img:hover {
+    transform: scale(1.04);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  }
+  .modal-bg {
+    display: none;
+    position: fixed;
+    z-index: 99;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.75);
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.15s;
+  }
+  .modal-bg.active {
+    display: flex;
+    opacity: 1;
+    animation: fadeIn .25s;
+  }
+  .modal-img {
+    max-width: 95vw;
+    max-height: 90vh;
+    border-radius: 12px;
+    box-shadow: 0 8px 40px rgba(0,0,0,.25);
+    background: #fff;
+    padding: 4px;
+  }
+  .modal-close {
+    position: absolute;
+    top: 24px;
+    right: 32px;
+    font-size: 2rem;
+    color: #fff;
+    cursor: pointer;
+    background: rgba(0,0,0,0.3);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    border: none;
+  }
+</style>
+
+<div class="gallery-container">
+  <img src="gallery/1.jpeg" alt="Photo 1" class="gallery-img" />
+  <img src="gallery/2.jpeg" alt="Photo 2" class="gallery-img" />
+  <img src="gallery/3.jpeg" alt="Photo 3" class="gallery-img" />
+  <img src="gallery/4.jpeg" alt="Photo 4" class="gallery-img" />
+  <img src="gallery/5.jpeg" alt="Photo 5" class="gallery-img" />
+  <img src="gallery/6.jpeg" alt="Photo 6" class="gallery-img" />
+  <img src="gallery/7.jpeg" alt="Photo 7" class="gallery-img" />
+  <img src="gallery/8.jpeg" alt="Photo 8" class="gallery-img" />
+  <img src="gallery/9.jpeg" alt="Photo 9" class="gallery-img" />
+  <img src="gallery/10.jpeg" alt="Photo 10" class="gallery-img" />
+  <img src="gallery/11.jpeg" alt="Photo 11" class="gallery-img" />
+  <img src="gallery/12.jpeg" alt="Photo 12" class="gallery-img" />
+  <img src="gallery/IMG-20241010-WA0018.jpg.jpeg" alt="Photo 13" class="gallery-img" />
+  <img src="gallery/IMG-20250118-WA0025.jpg.jpeg" alt="Photo 14" class="gallery-img" />
+  <img src="gallery/IMG-20250822-WA0012.jpg.jpeg" alt="Photo 15" class="gallery-img" />
+</div>
+
+<div class="modal-bg" id="imgModal">
+  <button class="modal-close" id="closeModal" title="Close">&times;</button>
+  <img src="" alt="Full Size" class="modal-img" id="modalBigImg" />
+</div>
+
+<script>
+  // Open modal on image click
+  document.querySelectorAll('.gallery-img').forEach(img => {
+    img.addEventListener('click', function() {
+      document.getElementById('modalBigImg').src = this.src;
+      document.getElementById('modalBigImg').alt = this.alt;
+      document.getElementById('imgModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  // Close modal logic
+  document.getElementById('closeModal').onclick = function() {
+    document.getElementById('imgModal').classList.remove('active');
+    document.body.style.overflow = '';
+  };
+
+  // Close modal when click outside image
+  document.getElementById('imgModal').addEventListener('click', function(e){
+    if(e.target === this){
+      this.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  });
+
+  // Pressing ESC closes modal
+  document.addEventListener('keydown', function(e){
+    if(e.key === "Escape"){
+      document.getElementById('imgModal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  });
+</script>
